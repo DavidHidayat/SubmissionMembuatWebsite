@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="responsive.css">
     <script src="data.json.js"></script>
     <title>Submission Membuat Website - David Hidayat</title>
 </head>
@@ -86,7 +87,7 @@
         var item = `
         <div class="card" onclick="showMovie(${element.id})">
             <div class="card-photo">
-                <img src="https://image.tmdb.org/t/p/original${element.poster_path}" alt="">
+                <img src="https://image.tmdb.org/t/p/original${element.poster_path}" alt="${element.title}">
             </div>
             <div class="card-title">${element.title}</div>
         </div>
