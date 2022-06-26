@@ -7,30 +7,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="stylesheet" href="main.css">
+    <script src="data.json.js"></script>
     <title>Submission Membuat Website - David Hidayat</title>
 </head>
 
-<body>
-    <header>
-        <h1>MoKList</h1>
-        <p><span>Mo</span>vie <span>K</span>orean <span>List</span></p>
+<body class="flex-column">
+    <div id="movie-info">
+        <article>
+            <button id="close" onclick="hiddenMovie()">Close</button>
+            <div class="flex-row" id="poster-container">
+                <div class="flex-1">
+                    <img id="poster" src="https://image.tmdb.org/t/p/original/nPW5AkzoQSO8dWhE8WZMFvC41iW.jpg" alt="">
+                </div>
+                <div class="flex-4 flex-column" style="margin-left:16px">
+                    <div class="flex-1">
+                        <h1 id="movie-title">Title</h1>
+                        <h3 id="movie-release">Sub-Title</h3>
+                    </div>
+                    <div class="flex-4" id="movie-overview">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi est saepe eius autem consequuntur ullam odio facere. Ipsum dolor esse eveniet beatae alias adipisci assumenda quas atque mollitia. Excepturi, neque?</div>
+                </div>
+
+            </div>
+        </article>
+    </div>
+    <header class="flex-2 bg-primary">
+        <h1 class="text-plain">MoKList</h1>
+        <p class="text-plain"><span class="text-accent">Mo</span>vie <span class="text-accent">K</span>orean <span class="text-accent">List</span></p>
         <nav>
             <ul>
-                <li id="active">Home</li>
-                <li>K-Movie</li>
-                <li>K-Drama</li>
-                <li>About</li>
+                <li><a href="#k-movie" id="active">K-Movie</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#about">About</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div id="content">
-            <article></article>
-            <article></article>
+    <main class="flex-row flex-4">
+        <div id="content" class="flex-4">
+            <article id="k-movie">
+                <h3 class="title">K-Movie</h3>
+                <div class="container" id="movie-item">
+
+                </div>
+            </article>
+            <article id="profile">
+                <h3 class="title">Profile</h3>
+                <div class="container">
+                    <div class="box">
+                        <div id="photo" class="float-right"></div>
+                    </div>
+                    <div class="box float-left" id="profile-desc">
+                        <h2>David Hidayat</h2>
+                        <h4>Fullstack Developer</h4>
+                        <h4>STMIK Bani Saleh, Bekasi</h4>
+                    </div>
+
+                </div>
+            </article>
+            <article id="about">
+                <h3 class="title text-plain">About</h3>
+                <p>Halaman ini dibuat sebagai syarat untuk kelulusan kursus Belajar Dasar Pemrograman Web yang diselenggarakan oleh IdCamp dan Dicoding Academy</p>
+            </article>
         </div>
-        <aside></aside>
+        <aside class="flex-1" id="movie-aside">
+            <h3 class="title text-accent">Other Movies</h3>
+            <ul id="movie-aside-item">
+            </ul>
+        </aside>
     </main>
-    <footer></footer>
+    <footer class="flex-1">
+        David Hidayat - Submission Membuat Website (Dicoding Academy)
+    </footer>
 </body>
+<script>
+    const kMovie = document.getElementById("movie-item");
+    const movieModal = document.getElementById("movie-info");
+    const kMovieAside = document.getElementById("movie-aside-item");
+    data.slice(0, 5).forEach(element => {
+        var item = `
+        <div class="card" onclick="showMovie(${element.id})">
+            <div class="card-photo">
+                <img src="https://image.tmdb.org/t/p/original${element.poster_path}" alt="">
+            </div>
+            <div class="card-title">${element.title}</div>
+        </div>
+        `;
+        kMovie.innerHTML += item;
+
+    });
+    data.slice(5).forEach(element => {
+        var itemAside = `<li class="aside-item" onclick="showMovie(${element.id})">${element.title}</li>`;
+        kMovieAside.innerHTML += itemAside;
+    });
+
+    function showMovie(id) {
+        var movie = data.find(x => x.id === id);
+        const poster = document.getElementById("poster");
+        const title = document.getElementById("movie-title");
+        const release = document.getElementById("movie-release");
+        const overview = document.getElementById("movie-overview");
+        poster.src = `https://image.tmdb.org/t/p/original${movie.poster_path}`;
+        title.textContent = movie.title;
+        release.textContent = movie.release_date;
+        overview.textContent = movie.overview;
+        movieModal.style.display = 'block';
+        console.log(movie);
+    }
+
+    function hiddenMovie() {
+        movieModal.style.display = 'none';
+    }
+</script>
 
 </html>
